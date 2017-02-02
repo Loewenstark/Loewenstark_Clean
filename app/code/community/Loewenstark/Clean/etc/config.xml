@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Loewenstark_Clean>
+            <version>1.0.0.0</version>
+        </Loewenstark_Clean>
+    </modules>
+    <global>
+        <helpers>
+            <loewenstarkclean>
+                <class>Loewenstark_Clean_Helper</class>
+            </loewenstarkclean>
+        </helpers>
+        <models>
+            <loewenstarkclean>
+                <class>Loewenstark_Clean_Model</class>
+            </loewenstarkclean>
+        </models>
+    </global>
+    <crontab>
+        <jobs>
+            <loewenstark_clean_quote>
+                <schedule>
+                    <cron_expr>15 4 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>loewenstarkclean/cron::cleanQuote</model>
+                </run>
+            </loewenstark_clean_quote>
+            <loewenstark_clean_log>
+                <schedule>
+                    <cron_expr>45 4 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>loewenstarkclean/cron::cleanLog</model>
+                </run>
+            </loewenstark_clean_log>
+        </jobs>
+    </crontab>
+</config>
