@@ -27,7 +27,7 @@ extends Mage_Core_Model_Abstract
         try {
             $where = $this->_getConnection()->quoteInto('updated_at <= ?', $date)
                     . ' AND '
-                    . '( customer_is_guest = 0 OR customer_id IS NULL OR customer_id = 0 )'
+                    . '( customer_is_guest = 1 OR customer_id IS NULL OR customer_id = 0 )'
             ;
             $this->_getConnection('core_write')
                     ->delete($this->_getTableName('sales_flat_quote'), $where);
