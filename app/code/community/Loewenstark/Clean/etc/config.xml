@@ -17,6 +17,18 @@
             </loewenstarkclean>
         </models>
     </global>
+    <adminhtml>
+        <events>
+            <controller_action_predispatch>
+                <observers>
+                    <loewenstarkclean>
+                        <class>loewenstarkclean/observer</class>
+                        <method>adminhtmlPreDispatchEvent</method>
+                    </loewenstarkclean>
+                </observers>
+            </controller_action_predispatch>
+        </events>
+    </adminhtml>
     <crontab>
         <jobs>
             <loewenstark_clean_quote>
@@ -33,6 +45,14 @@
                 </schedule>
                 <run>
                     <model>loewenstarkclean/cron::cleanLog</model>
+                </run>
+            </loewenstark_clean_log>
+            <loewenstark_clean_log>
+                <schedule>
+                    <cron_expr>45 6 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>loewenstarkclean/cron::cleanCronTab</model>
                 </run>
             </loewenstark_clean_log>
         </jobs>
