@@ -22,8 +22,8 @@ extends Mage_Core_Model_Abstract
             Mage::logException($e);
         }
 
-        // remove all guest older than 4 days
-        $date = date('Y-m-d H:i:s', strtotime('-4 days'));
+        // remove all guest older than 30 days
+        $date = date('Y-m-d H:i:s', strtotime('-30 days'));
         try {
             $where = $this->_getConnection()->quoteInto('updated_at <= ?', $date)
                     . ' AND '
@@ -37,7 +37,10 @@ extends Mage_Core_Model_Abstract
 
         try {
             // remove all old quotes - order has been generated
-            $where = $this->_getConnection()->quoteInto('is_active = ?', 0);
+            // some extensions may need the old quote of an order
+            $where = $this->_getConnection()->quoteInto('is_active = ?', 0)
+                    . ' AND '
+                    .$this->_getConnection()->quoteInto('updated_at <= ?', $date);
             $this->_getConnection('core_write')
                     ->delete($this->_getTableName('sales_flat_quote'), $where);
         } catch (Exception $e) {
@@ -82,6 +85,14 @@ extends Mage_Core_Model_Abstract
         } catch (Exception $e) {
             Mage::logException($e);
         }
+    }
+
+    /**
+     * 
+     */
+    public function cleanCronTab()
+    {
+        Mage::getModel('loewenstarkclean/observer')->checkCronTab();
     }
 
     /**
