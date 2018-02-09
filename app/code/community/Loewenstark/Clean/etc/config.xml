@@ -47,14 +47,14 @@
                     <model>loewenstarkclean/cron::cleanLog</model>
                 </run>
             </loewenstark_clean_log>
-            <loewenstark_clean_log>
+            <loewenstark_clean_crontab>
                 <schedule>
                     <cron_expr>45 6 * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>loewenstarkclean/cron::cleanCronTab</model>
                 </run>
-            </loewenstark_clean_log>
+            </loewenstark_clean_crontab>
         </jobs>
     </crontab>
 </config>
