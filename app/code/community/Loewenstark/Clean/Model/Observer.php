@@ -42,11 +42,18 @@ extends Mage_Core_Model_Abstract
         // check if Aoe Scheduler is installed
         if ($model instanceof Aoe_Scheduler_Model_Schedule)
         {
-            $status = array_merge($status, array(
-                Aoe_Scheduler_Model_Schedule::STATUS_DIDNTDOANYTHING,
-                Aoe_Scheduler_Model_Schedule::STATUS_DISAPPEARED,
-                Aoe_Scheduler_Model_Schedule::STATUS_REPEAT,
-            ));
+            $tmp = array();
+            
+            if(defined('Aoe_Scheduler_Model_Schedule::STATUS_DIDNTDOANYTHING'))
+                $tmp[] = Aoe_Scheduler_Model_Schedule::STATUS_DIDNTDOANYTHING;
+            
+            if(defined('Aoe_Scheduler_Model_Schedule::STATUS_DISAPPEARED'))
+                $tmp[] = Aoe_Scheduler_Model_Schedule::STATUS_DISAPPEARED;
+            
+            if(defined('Aoe_Scheduler_Model_Schedule::STATUS_REPEAT'))
+                $tmp[] = Aoe_Scheduler_Model_Schedule::STATUS_REPEAT;
+            
+            $status = array_merge($status, $tmp);
             $status = array_unique($status);
         }
         $date = strtotime('-8 hours');
@@ -57,7 +64,7 @@ extends Mage_Core_Model_Abstract
                 ->delete($this->_getTableName('cron_schedule'), $where);
         
         $where = $this->_getConnection()->quoteInto('scheduled_at <= ?', $date)
-                . ' AND (status IS NULL OR status = \'\'';
+                . ' AND (status IS NULL OR status = \'\')';
         $this->_getConnection('core_write')
                 ->delete($this->_getTableName('cron_schedule'), $where);
     }
