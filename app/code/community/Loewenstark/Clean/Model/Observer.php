@@ -42,18 +42,18 @@ extends Mage_Core_Model_Abstract
         // check if Aoe Scheduler is installed
         if ($model instanceof Aoe_Scheduler_Model_Schedule)
         {
-            $tmp = array();
-            
             if(defined('Aoe_Scheduler_Model_Schedule::STATUS_DIDNTDOANYTHING'))
-                $tmp[] = Aoe_Scheduler_Model_Schedule::STATUS_DIDNTDOANYTHING;
-            
+            {
+                $status[] = Aoe_Scheduler_Model_Schedule::STATUS_DIDNTDOANYTHING;
+            }
             if(defined('Aoe_Scheduler_Model_Schedule::STATUS_DISAPPEARED'))
-                $tmp[] = Aoe_Scheduler_Model_Schedule::STATUS_DISAPPEARED;
-            
+            {
+                $status[] = Aoe_Scheduler_Model_Schedule::STATUS_DISAPPEARED;
+            }
             if(defined('Aoe_Scheduler_Model_Schedule::STATUS_REPEAT'))
-                $tmp[] = Aoe_Scheduler_Model_Schedule::STATUS_REPEAT;
-            
-            $status = array_merge($status, $tmp);
+            {
+                $status[] = Aoe_Scheduler_Model_Schedule::STATUS_REPEAT;
+            }            
             $status = array_unique($status);
         }
         $date = strtotime('-8 hours');
